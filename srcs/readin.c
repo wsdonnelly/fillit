@@ -1,4 +1,5 @@
 #include "fillit.h"
+#include <stdio.h>
 
 t_list	*readin(char *file, t_list **head)
 {
@@ -22,7 +23,7 @@ t_list	*readin(char *file, t_list **head)
 			return (0);
 		}
 		buf[ret] = '\0';
-		if ((ret == BUFF_SIZE && buf[20] != '\n') || (ret == 18 && buf[19] != '\0'))
+		if ((ret == BUFF_SIZE && buf[20] != '\n') || (ret == 19 && buf[19] != '\0'))
 		//if (ret < BUFF_SIZE || (buf[20] != '\n'))
 		{
 			//INVALID TETRIMINO ERROR
@@ -72,6 +73,7 @@ int	validate(char buf[BUFF_SIZE], t_list **head)
 				return (0);
 			}
 		}
+		printf("connections = %d\n", connections);
 		connections += check_connections(buf, i);
 		i++;
 	}

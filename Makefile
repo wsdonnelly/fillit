@@ -10,7 +10,7 @@ HDRS = hdrs/
 LIB = libft/ 
 #LIBFT = make -C libft/ fclean && make -C libft/
 
-all: 
+all:
 	$(MAKE) -C $(LIB)
 	$(MAKE) $(NAME)
 

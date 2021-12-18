@@ -6,8 +6,6 @@
 # include <unistd.h>
 # include "../libft/libft.h"
 
-#include <stdio.h>
-
 # define BUFF_SIZE 21
 
 typedef struct s_list
