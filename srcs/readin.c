@@ -62,7 +62,11 @@ int	validate(char buf[BUFF_SIZE], t_list **head)
 				return (0);
 			}
 			if (buf[i] == '#')
+			{
+				printf("connections = %d\n", connections);
+				connections += check_connections(buf, i);
 				hash_count++;
+			}
 		}
 		else
 		{
@@ -73,8 +77,6 @@ int	validate(char buf[BUFF_SIZE], t_list **head)
 				return (0);
 			}
 		}
-		printf("connections = %d\n", connections);
-		connections += check_connections(buf, i);
 		i++;
 	}
 	if (connections > 5 && hash_count == 4)
