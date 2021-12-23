@@ -14,6 +14,16 @@ void	free_list(t_list **head)
 	}
 }
 
+int	get_size(int valid_count)
+{
+	int size;
+
+	size = 4;
+	while (size * size < valid_count * 4)
+		size++;
+	return (size);
+}
+
 char	*new_grid(int size)
 {
 	char	*grid;
@@ -44,26 +54,58 @@ void print_grid(char *grid, int size)
 	}
 }
 
-void place_on_grid(char *grid, t_list **head, int size)
+int place_on_grid(char *grid, t_list *temp, int size) //rename solve
 {
 	int	i;
-	t_list			*temp;
 
-	temp = *head;
-	while (temp)
+	if (temp == NULL)
+		return (1);
+	i = 0;
+	while (i < (size * size) - 4)
 	{
-		i = 0;
-		while (i <= size - 4)
+		if (add_tetri(temp, i, grid, size))
 		{
-			if (!add_tetri(temp, i, grid, size))
-				i++;
-			else
-				break;
+			if (place_on_grid(grid, temp->next, size))
+				return (1);
+			delete_tetri(temp, grid, size, i);
 		}
-		temp = temp->next;
+		i++;
+	}
+	return (0);
+}
+void delete_tetri(t_list *temp, char *grid, int size, int i)
+{
+	int	j;
+	int	k;
+
+	grid[i] = '.';
+	j = 0;
+	k = i;
+	while (j < 3)
+	{
+		if ((temp->rule)[j] == 'd')
+		{
+			k += size;
+			grid[k] = '.';
+		}
+		else if ((temp->rule)[j] == 'r')
+		{
+			k++;
+			grid[k] = '.';
+		}
+		else if ((temp->rule)[j] == '2')
+		{
+			k += size - 2;
+			grid[k] = '.';
+		}
+		else if ((temp->rule)[j] == '1')
+		{
+			k += size - 1;
+			grid[k] = '.';
+		}
+		j++;
 	}
 }
-
 int add_tetri(t_list *temp, int i, char *grid, int size)
 {
 	int j;
@@ -127,10 +169,4 @@ void draw_tetri(t_list *temp, char *grid, int size, int i)
 		j++;
 	}
 }
-/*
-grid[i] = '#';
-grid[i + size] = 'd';
-grid[i + 1] = 'r';
-grid[i + size - 2] = '2';
-grid[i + size - 1] = '1';
-*/
+

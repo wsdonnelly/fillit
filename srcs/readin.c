@@ -1,11 +1,10 @@
 #include "fillit.h"
-#include <stdio.h>
 
-t_list	*readin(char *file, t_list **head)
+t_list	*readin(char *file, t_list **head, t_list **tail, int *valid_count)
 {
-	int fd;
+	int		fd;
 	ssize_t	ret;
-	char buf[BUFF_SIZE + 1];
+	char	buf[BUFF_SIZE + 1];
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
@@ -23,30 +22,30 @@ t_list	*readin(char *file, t_list **head)
 			return (0);
 		}
 		buf[ret] = '\0';
-		if ((ret == BUFF_SIZE && buf[20] != '\n') || (ret == 19 && buf[19] != '\0'))
-		//if (ret < BUFF_SIZE || (buf[20] != '\n'))
+		if ((ret == BUFF_SIZE && buf[20] != '\n') \
+		|| (ret == 19 && buf[19] != '\0'))
 		{
 			//INVALID TETRIMINO ERROR
 			ft_putstr("invalid tetrimino1\n");
 			return (0);
 		}
-		if (!validate(buf, head))
+		if (!validate(buf, head, tail, valid_count))
 		{
 			//TETRIMINO ERROR
 			ft_putstr("invalid tetrimino2\n");
 			return (0);
 		}
 	}
-	ft_putstr("valid file!\n");
+	//ft_putstr("valid file!\n");
 	close (fd);
 	return (*head);
 }
 
-int	validate(char buf[BUFF_SIZE], t_list **head)
+int	validate(char buf[BUFF_SIZE], t_list **head, t_list **tail, int *valid_count)
 {
 	int	i;
-	int hash_count;
-	int connections;
+	int	hash_count;
+	int	connections;
 
 	i = 0;
 	hash_count = 0;
@@ -63,8 +62,8 @@ int	validate(char buf[BUFF_SIZE], t_list **head)
 			}
 			if (buf[i] == '#')
 			{
-				printf("connections = %d\n", connections);
 				connections += check_connections(buf, i);
+				//printf("connections = %d\n", connections);
 				hash_count++;
 			}
 		}
@@ -81,9 +80,10 @@ int	validate(char buf[BUFF_SIZE], t_list **head)
 	}
 	if (connections > 5 && hash_count == 4)
 	{
+		(*valid_count)++;
 		//VALID TETRIMINO
-		ft_putstr("valid tetrimino\n");
-		if (!add_to_list(buf, head))
+		//ft_putstr("valid tetrimino\n");
+		if (!add_to_list(buf, head, tail, valid_count))
 		{
 			//MALLOC ERROR
 			ft_putstr("malloc error\n");
@@ -94,7 +94,7 @@ int	validate(char buf[BUFF_SIZE], t_list **head)
 	return (0);
 }
 
-int check_connections(char buf[BUFF_SIZE], int i)
+int	check_connections(char buf[BUFF_SIZE], int i)
 {
 	int c;
 
@@ -122,7 +122,7 @@ int check_connections(char buf[BUFF_SIZE], int i)
 	return (c);
 }
 
-int add_to_list(char buf[BUFF_SIZE], t_list **head)
+int	add_to_list(char buf[BUFF_SIZE], t_list **head, t_list **tail, int *valid_count)
 {
 	int		i;
 	int		j;
@@ -132,14 +132,46 @@ int add_to_list(char buf[BUFF_SIZE], t_list **head)
 	if (!temp)
 		return (0);
 	i = 0;
-	j = 0;
 	while (i < 19)
 	{
-		if (i % 5 != 4)
-			temp->tetri[j++] = buf[i];
+		if (buf[i] == '#')
+		{
+			j = i;
+			while (buf[j])
+			{
+				j++;
+				if (buf[j] == '#')
+				{
+					//temp->rule[k] = (j - i) % size;
+					if ((j - i) % 5 == 0)
+						ft_strcat(temp->rule, "d");
+					else if ((j - i) % 5 == 1)
+						ft_strcat(temp->rule, "r");
+					else if ((j - i) % 5 == 3)
+						ft_strcat(temp->rule, "2");
+					else if ((j - i) % 5 == 4)
+						ft_strcat(temp->rule, "1");
+					i = j;
+				}
+			}
+			break ;
+		}
 		i++;
 	}
-	temp->next = *head;
-	*head = temp;
+	//printf("tetri rule:\t%s\n", temp->rule);
+	//MAKE QUEUE??
+	temp->count = *valid_count;
+	temp->next = NULL;
+	if (*tail == NULL)
+	{
+		*tail = temp;
+		*head = temp;
+	}
+	else
+	{
+		(*tail)->next = temp;
+		*tail = temp;
+	}
+	
 	return (1);
 }
