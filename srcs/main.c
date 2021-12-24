@@ -12,8 +12,8 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 	{
-		//ERROR
-		ft_putstr("error\n");
+		//ERROR DISPLAY USAGE
+		ft_putstr("usage: fillit input_file.fillit\n");
 		return (0);
 	}
 	head = NULL;
