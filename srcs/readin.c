@@ -4,21 +4,31 @@ t_list	*readin(char *file, t_list **head, t_list **tail, int *valid_count)
 {
 	int		fd;
 	ssize_t	ret;
+	ssize_t	ret_cpy;
 	char	buf[BUFF_SIZE + 1];
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
 		//OPEN ERROR
-		ft_putstr("open error\n");
+		ft_putstr("error\n");
 		return (0);
 	}
-	while ((ret = read(fd, buf, BUFF_SIZE)))
+	ret = read(fd, buf, BUFF_SIZE);
+	if (ret == 0)
 	{
+		//INVALID TETRIMINO ERROR
+		ft_putstr("error\n");
+		return (0);
+	}
+	while (ret)
+	//while ((ret = read(fd, buf, BUFF_SIZE)))
+	{
+		ret_cpy = ret;
 		if (ret == -1)
 		{
 			// READ ERROR
-			ft_putstr("read error\n");
+			ft_putstr("error\n");
 			return (0);
 		}
 		buf[ret] = '\0';
@@ -26,15 +36,25 @@ t_list	*readin(char *file, t_list **head, t_list **tail, int *valid_count)
 		|| (ret == 19 && buf[19] != '\0'))
 		{
 			//INVALID TETRIMINO ERROR
-			ft_putstr("invalid tetrimino1\n");
+			ft_putstr("error\n");
 			return (0);
 		}
 		if (!validate(buf, head, tail, valid_count))
 		{
 			//TETRIMINO ERROR
-			ft_putstr("invalid tetrimino2\n");
+			ft_putstr("error\n");
 			return (0);
 		}
+		//CATCH FILE ENDING WITH \N???
+		//DISPLAY EMPTY ERROR
+		ret = read(fd, buf, BUFF_SIZE);
+		if (ret_cpy == 21 && ret == 0)
+		{
+			//TETRIMINO ERROR
+			ft_putstr("error\n");
+			return (0);
+		}
+	
 	}
 	//ft_putstr("valid file!\n");
 	close (fd);
@@ -57,7 +77,6 @@ int	validate(char buf[BUFF_SIZE], t_list **head, t_list **tail, int *valid_count
 			if (buf[i] != '.' && buf[i] != '#')
 			{
 				//TETRIMINO ERROR
-				ft_putstr("error here 1\n");
 				return (0);
 			}
 			if (buf[i] == '#')
@@ -72,7 +91,6 @@ int	validate(char buf[BUFF_SIZE], t_list **head, t_list **tail, int *valid_count
 			if (buf[i] != '\n' && buf[i] != '\0')
 			{
 				//TETRIMINO ERROR
-				ft_putstr("error here 2\n");
 				return (0);
 			}
 		}
@@ -85,8 +103,6 @@ int	validate(char buf[BUFF_SIZE], t_list **head, t_list **tail, int *valid_count
 		//ft_putstr("valid tetrimino\n");
 		if (!add_to_list(buf, head, tail, valid_count))
 		{
-			//MALLOC ERROR
-			ft_putstr("malloc error\n");
 			return (0);
 		}
 		return (1);

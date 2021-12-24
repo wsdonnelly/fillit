@@ -13,7 +13,7 @@ int	main(int ac, char **av)
 	if (ac != 2)
 	{
 		//ERROR
-		ft_putstr("argument error\n");
+		ft_putstr("error\n");
 		return (0);
 	}
 	head = NULL;
@@ -24,15 +24,17 @@ int	main(int ac, char **av)
 		return (0);
 	size = get_size(valid_count);
 	grid = new_grid(size);
-	printf("start size:\t%d\n", size);
+	//printf("start size:\t%d\n", size);
 	temp = head;
+	/*
 	while (temp)
 	{
 		printf("temp->rule %s\n", temp->rule);
 		temp = temp->next;
 	}
-	temp = head;
-	while (!place_on_grid(grid, temp, size))
+	*/
+	//temp = head;
+	while (!place_on_grid(grid, head, size))
 	{
 		size++;
 		grid_cpy = grid;

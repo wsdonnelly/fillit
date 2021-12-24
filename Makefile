@@ -3,11 +3,11 @@ CC = gcc
 #DEBUG = -g
 FLAGS = -Wall -Wextra -Werror
 MORE_FLAGS = -Wpedantic -Wunused -Wconversion -Wunreachable-code -Wtype-limits
-SRCS = srcs/main.c srcs/readin.c srcs/util.c
+SRCS = srcs/main.c srcs/readin.c srcs/util.c srcs/solve.c
 #OBJS = $(SRCS:.c=.o)
-OBJS = main.o readin.o util.o
+OBJS = main.o readin.o util.o solve.o
 HDRS = hdrs/
-LIB = libft/ 
+LIB = libft/
 #LIBFT = make -C libft/ fclean && make -C libft/
 
 all:
