@@ -58,7 +58,7 @@ t_tetri	*readin(char *file, t_list *list, int *valid_count)
 	}
 	//ft_putstr("valid file!\n");
 	close (fd);
-	return (*(list->head));
+	return (list->head);
 }
 
 int	validate(char buf[BUFF_SIZE], t_list *list, int *valid_count)
@@ -176,15 +176,15 @@ int	add_to_list(char buf[BUFF_SIZE], t_list *list, int *valid_count)
 	}
 	temp->count = *valid_count;
 	temp->next = NULL;
-	if (*(list->tail) == NULL)
+	if (list->tail == NULL)
 	{
-		*(list->tail) = temp;
-		*(list->head) = temp;
+		list->tail = temp;
+		list->head = temp;
 	}
 	else
 	{
-		(*(list->tail))->next = temp;
-		*(list->tail) = temp;
+		(list->tail)->next = temp;
+		list->tail = temp;
 	}
 	return (1);
 }

@@ -19,8 +19,8 @@ typedef struct s_tetri
 
 typedef struct s_list
 {
-	struct s_tetri	**head;
-	struct s_tetri	**tail;
+	struct s_tetri	*head;
+	struct s_tetri	*tail;
 }				t_list;
 
 //read in functions
