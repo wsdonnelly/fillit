@@ -1,6 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   solve.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: willdonnelly <willdonnelly@student.42.f    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/25 14:16:45 by willdonnell       #+#    #+#             */
+/*   Updated: 2021/12/25 14:22:43 by willdonnell      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fillit.h"
 
-int place_on_grid(char *grid, t_tetri *temp, int size) //rename solve
+void	solve(int count, t_tetri *head)
+{
+	int		size;
+	char	*grid;
+	char	*grid_cpy;
+
+	size = get_size(count);
+	grid = new_grid(size);
+	while (!place_on_grid(grid, head, size))
+	{
+		size++;
+		grid_cpy = grid;
+		grid = new_grid(size);
+		free (grid_cpy);
+	}
+	print_grid(grid, size);
+	free (grid);
+}
+
+int	place_on_grid(char *grid, t_tetri *temp, int size)
 {
 	int	i;
 
@@ -20,7 +51,7 @@ int place_on_grid(char *grid, t_tetri *temp, int size) //rename solve
 	return (0);
 }
 
-void delete_tetri(t_tetri *temp, char *grid, int size, int i)
+void	delete_tetri(t_tetri *temp, char *grid, int size, int i)
 {
 	int	j;
 	int	k;
@@ -53,10 +84,11 @@ void delete_tetri(t_tetri *temp, char *grid, int size, int i)
 		j++;
 	}
 }
-int add_tetri(t_tetri *temp, int i, char *grid, int size)
+
+int	add_tetri(t_tetri *temp, int i, char *grid, int size)
 {
-	int j;
-	int k;
+	int	j;
+	int	k;
 
 	j = 0;
 	if (grid[i] == '.')
@@ -64,13 +96,17 @@ int add_tetri(t_tetri *temp, int i, char *grid, int size)
 		k = i;
 		while (j < 3)
 		{
-			if ((temp->rule)[j] == 'd' && (k + size) < (size * size) && grid[k + size] == '.')
+			if ((temp->rule)[j] == 'd' && (k + size) < (size * size) \
+			&& grid[k + size] == '.')
 				k += size;
-			else if ((temp->rule)[j] == 'r' && (k % size) + 1 < size && grid[k + 1] == '.')
+			else if ((temp->rule)[j] == 'r' && (k % size) + 1 < size \
+			&& grid[k + 1] == '.')
 				k++;
-			else if ((temp->rule)[j] == '2' && ((k + size) < (size * size) && (k % size) - 2 >= 0) && grid[k + size - 2] == '.')
+			else if ((temp->rule)[j] == '2' && ((k + size) < (size * size) \
+			&& (k % size) - 2 >= 0) && grid[k + size - 2] == '.')
 				k += size - 2;
-			else if ((temp->rule)[j] == '1' && ((k + size) < (size * size) && (k % size) - 1 >= 0) && grid[k + size - 1] == '.')
+			else if ((temp->rule)[j] == '1' && ((k + size) < (size * size) \
+			&& (k % size) - 1 >= 0) && grid[k + size - 1] == '.')
 				k += size - 1;
 			else
 				return (0);
@@ -82,10 +118,10 @@ int add_tetri(t_tetri *temp, int i, char *grid, int size)
 	return (0);
 }
 
-void draw_tetri(t_tetri *temp, char *grid, int size, int i)
+void	draw_tetri(t_tetri *temp, char *grid, int size, int i)
 {
-	int j;
-	char c;
+	int		j;
+	char	c;
 
 	c = '@';
 	j = 0;
