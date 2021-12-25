@@ -1,11 +1,11 @@
 #include "fillit.h"
 
-void	free_list(t_list **head)
+void	free_list(t_tetri *head)
 {
-	t_list	*cur;
-	t_list	*next;
+	t_tetri	*cur;
+	t_tetri	*next;
 
-	cur = *head;
+	cur = head;
 	while (cur)
 	{
 		next = cur->next;

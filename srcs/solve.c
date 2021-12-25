@@ -1,6 +1,6 @@
 #include "fillit.h"
 
-int place_on_grid(char *grid, t_list *temp, int size) //rename solve
+int place_on_grid(char *grid, t_tetri *temp, int size) //rename solve
 {
 	int	i;
 
@@ -20,7 +20,7 @@ int place_on_grid(char *grid, t_list *temp, int size) //rename solve
 	return (0);
 }
 
-void delete_tetri(t_list *temp, char *grid, int size, int i)
+void delete_tetri(t_tetri *temp, char *grid, int size, int i)
 {
 	int	j;
 	int	k;
@@ -53,7 +53,7 @@ void delete_tetri(t_list *temp, char *grid, int size, int i)
 		j++;
 	}
 }
-int add_tetri(t_list *temp, int i, char *grid, int size)
+int add_tetri(t_tetri *temp, int i, char *grid, int size)
 {
 	int j;
 	int k;
@@ -82,7 +82,7 @@ int add_tetri(t_list *temp, int i, char *grid, int size)
 	return (0);
 }
 
-void draw_tetri(t_list *temp, char *grid, int size, int i)
+void draw_tetri(t_tetri *temp, char *grid, int size, int i)
 {
 	int j;
 	char c;

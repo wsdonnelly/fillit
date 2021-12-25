@@ -2,13 +2,11 @@
 
 int	main(int ac, char **av)
 {
-	t_list	*head;
-	t_list	*tail;
-	t_list *temp;
+	t_list	*list;
 	int		valid_count;
-	char *grid;
-	char *grid_cpy;
-	int	size;
+	char	*grid;
+	char	*grid_cpy;
+	int		size;
 
 	if (ac != 2)
 	{
@@ -16,16 +14,17 @@ int	main(int ac, char **av)
 		ft_putstr("usage: fillit input_file.fillit\n");
 		return (0);
 	}
-	head = NULL;
-	tail = NULL;
+	list = NULL;
+	list->head = NULL;
+	list->tail = NULL;
 	valid_count = 0;
-	head = readin(av[1], &head, &tail, &valid_count);
-	if (!head)
+	list->head = readin(av[1], &list, &valid_count);
+	if (!list->head)
 		return (0);
 	size = get_size(valid_count);
 	grid = new_grid(size);
 	//printf("start size:\t%d\n", size);
-	temp = head;
+	//temp = list->head;
 	/*
 	while (temp)
 	{
@@ -33,8 +32,7 @@ int	main(int ac, char **av)
 		temp = temp->next;
 	}
 	*/
-	//temp = head;
-	while (!place_on_grid(grid, head, size))
+	while (!place_on_grid(grid, list->head, size))
 	{
 		size++;
 		grid_cpy = grid;
@@ -44,6 +42,6 @@ int	main(int ac, char **av)
 	print_grid(grid, size);
 	free (grid);
 	//FREE ENTIRE LIST
-	free_list(&head);
+	free_list(list->head);
 	return (0);
 }

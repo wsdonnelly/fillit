@@ -1,6 +1,6 @@
 #include "fillit.h"
 
-t_list	*readin(char *file, t_list **head, t_list **tail, int *valid_count)
+t_tetri	*readin(char *file, t_list **list, int *valid_count)
 {
 	int		fd;
 	ssize_t	ret;
@@ -39,7 +39,7 @@ t_list	*readin(char *file, t_list **head, t_list **tail, int *valid_count)
 			ft_putstr("error\n");
 			return (0);
 		}
-		if (!validate(buf, head, tail, valid_count))
+		if (!validate(buf, list, valid_count))
 		{
 			//TETRIMINO ERROR
 			ft_putstr("error\n");
@@ -58,10 +58,10 @@ t_list	*readin(char *file, t_list **head, t_list **tail, int *valid_count)
 	}
 	//ft_putstr("valid file!\n");
 	close (fd);
-	return (*head);
+	return ((*list)->head);
 }
 
-int	validate(char buf[BUFF_SIZE], t_list **head, t_list **tail, int *valid_count)
+int	validate(char buf[BUFF_SIZE], t_list **list, int *valid_count)
 {
 	int	i;
 	int	hash_count;
@@ -101,7 +101,7 @@ int	validate(char buf[BUFF_SIZE], t_list **head, t_list **tail, int *valid_count
 		(*valid_count)++;
 		//VALID TETRIMINO
 		//ft_putstr("valid tetrimino\n");
-		if (!add_to_list(buf, head, tail, valid_count))
+		if (!add_to_list(buf, list, valid_count))
 		{
 			return (0);
 		}
@@ -138,13 +138,13 @@ int	check_connections(char buf[BUFF_SIZE], int i)
 	return (c);
 }
 
-int	add_to_list(char buf[BUFF_SIZE], t_list **head, t_list **tail, int *valid_count)
+int	add_to_list(char buf[BUFF_SIZE], t_list **list, int *valid_count)
 {
 	int		i;
 	int		j;
-	t_list	*temp;
+	t_tetri	*temp;
 
-	temp = (t_list *)malloc(sizeof(t_list));
+	temp = (t_tetri *)malloc(sizeof(t_tetri));
 	if (!temp)
 		return (0);
 	i = 0;
@@ -178,15 +178,15 @@ int	add_to_list(char buf[BUFF_SIZE], t_list **head, t_list **tail, int *valid_co
 	//MAKE QUEUE??
 	temp->count = *valid_count;
 	temp->next = NULL;
-	if (*tail == NULL)
+	if ((*list)->tail == NULL)
 	{
-		*tail = temp;
-		*head = temp;
+		(*list)->tail = temp;
+		(*list)->head = temp;
 	}
 	else
 	{
-		(*tail)->next = temp;
-		*tail = temp;
+		((*list)->tail)->next = temp;
+		(*list)->tail = temp;
 	}
 	
 	return (1);
