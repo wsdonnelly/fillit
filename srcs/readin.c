@@ -6,7 +6,7 @@
 /*   By: willdonnelly <willdonnelly@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 14:01:52 by willdonnell       #+#    #+#             */
-/*   Updated: 2021/12/25 14:39:23 by willdonnell      ###   ########.fr       */
+/*   Updated: 2021/12/25 15:08:30 by willdonnell      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_tetri	*readin(char *file, t_queue *queue, int *count)
 		return (0);
 	}
 	ret = read(fd, buf, BUFF_SIZE);
-	if (ret == 0)
+	if (ret == 0 || ret == -1)
 	{
 		ft_putstr("error\n");
 		return (0);
@@ -34,11 +34,6 @@ t_tetri	*readin(char *file, t_queue *queue, int *count)
 	while (ret)
 	{
 		ret_cpy = ret;
-		if (ret == -1)
-		{
-			ft_putstr("error\n");
-			return (0);
-		}
 		buf[ret] = '\0';
 		if ((ret == BUFF_SIZE && buf[20] != '\n') \
 		|| (ret == 19 && buf[19] != '\0'))
@@ -52,7 +47,7 @@ t_tetri	*readin(char *file, t_queue *queue, int *count)
 			return (0);
 		}
 		ret = read(fd, buf, BUFF_SIZE);
-		if (ret_cpy == 21 && ret == 0)
+		if ((ret_cpy == 21 && ret == 0) || ret == -1)
 		{
 			ft_putstr("error\n");
 			return (0);

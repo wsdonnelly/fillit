@@ -6,7 +6,7 @@
 /*   By: willdonnelly <willdonnelly@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 14:28:21 by willdonnell       #+#    #+#             */
-/*   Updated: 2021/12/25 14:33:23 by willdonnell      ###   ########.fr       */
+/*   Updated: 2021/12/25 17:00:09 by willdonnell      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,9 @@ int		get_size(int valid_count);
 //solve
 void	solve(int count, t_tetri *head);
 int		place_on_grid(char *grid, t_tetri *temp, int size);
-int		add_tetri(t_tetri *temp, int i, char *grid, int size);
-void	draw_tetri(t_tetri *temp, char *grid, int size, int i);
-void	delete_tetri(t_tetri *temp, char *grid, int size, int i);
+int		add_tetri(t_tetri *temp, int i, char *grid, int size, int rl[4]);
+//void	draw_tetri(t_tetri *temp, char *grid, int size, int i);
+//void	delete_tetri(t_tetri *temp, char *grid, int size, int i);
+void draw_delete_tetri(int flag, char *grid, int rl[4], int count);
 
 #endif
