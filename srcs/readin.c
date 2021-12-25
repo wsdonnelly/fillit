@@ -1,6 +1,6 @@
 #include "fillit.h"
 
-t_tetri	*readin(char *file, t_list **list, int *valid_count)
+t_tetri	*readin(char *file, t_list *list, int *valid_count)
 {
 	int		fd;
 	ssize_t	ret;
@@ -58,10 +58,10 @@ t_tetri	*readin(char *file, t_list **list, int *valid_count)
 	}
 	//ft_putstr("valid file!\n");
 	close (fd);
-	return ((*list)->head);
+	return (*(list->head));
 }
 
-int	validate(char buf[BUFF_SIZE], t_list **list, int *valid_count)
+int	validate(char buf[BUFF_SIZE], t_list *list, int *valid_count)
 {
 	int	i;
 	int	hash_count;
@@ -138,7 +138,7 @@ int	check_connections(char buf[BUFF_SIZE], int i)
 	return (c);
 }
 
-int	add_to_list(char buf[BUFF_SIZE], t_list **list, int *valid_count)
+int	add_to_list(char buf[BUFF_SIZE], t_list *list, int *valid_count)
 {
 	int		i;
 	int		j;
@@ -174,20 +174,17 @@ int	add_to_list(char buf[BUFF_SIZE], t_list **list, int *valid_count)
 		}
 		i++;
 	}
-	//printf("tetri rule:\t%s\n", temp->rule);
-	//MAKE QUEUE??
 	temp->count = *valid_count;
 	temp->next = NULL;
-	if ((*list)->tail == NULL)
+	if (*(list->tail) == NULL)
 	{
-		(*list)->tail = temp;
-		(*list)->head = temp;
+		*(list->tail) = temp;
+		*(list->head) = temp;
 	}
 	else
 	{
-		((*list)->tail)->next = temp;
-		(*list)->tail = temp;
+		(*(list->tail))->next = temp;
+		*(list->tail) = temp;
 	}
-	
 	return (1);
 }

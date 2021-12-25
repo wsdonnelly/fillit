@@ -19,15 +19,15 @@ typedef struct s_tetri
 
 typedef struct s_list
 {
-	struct s_tetri	*head;
-	struct s_tetri	*tail;
+	struct s_tetri	**head;
+	struct s_tetri	**tail;
 }				t_list;
 
 //read in functions
-t_tetri	*readin(char *file, t_list **list, int *valid_count);
-int		validate(char buf[BUFF_SIZE], t_list **list, int *valid_count);
+t_tetri	*readin(char *file, t_list *list, int *valid_count);
+int		validate(char buf[BUFF_SIZE], t_list *list, int *valid_count);
 int		check_connections(char buf[BUFF_SIZE], int i);
-int		add_to_list(char buf[BUFF_SIZE], t_list **list, int *valid_count);
+int		add_to_list(char buf[BUFF_SIZE], t_list *list, int *valid_count);
 //util
 void	free_list(t_tetri *head);
 char	*new_grid(int size);
