@@ -22,6 +22,7 @@ int	main(int ac, char **av)
 		return (0);
 	size = get_size(valid_count);
 	grid = new_grid(size);
+	
 	while (!place_on_grid(grid, head, size))
 	{
 		size++;

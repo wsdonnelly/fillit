@@ -1,5 +1,10 @@
 #include "fillit.h"
 
+void solve()
+{
+
+}
+
 int place_on_grid(char *grid, t_list *temp, int size) //rename solve
 {
 	int	i;
