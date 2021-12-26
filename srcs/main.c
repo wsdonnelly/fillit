@@ -1,37 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: willdonnelly <willdonnelly@student.42.f    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/25 14:01:24 by willdonnell       #+#    #+#             */
+/*   Updated: 2021/12/26 14:18:43 by willdonnell      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fillit.h"
 
 int	main(int ac, char **av)
 {
-	t_list	*head;
-	t_list	*tail;
-	int		valid_count;
-	char	*grid;
-	char	*grid_cpy;
-	int		size;
+	t_queue	queue;
+	int		count;
 
 	if (ac != 2)
 	{
 		ft_putstr("usage: fillit input_file.fillit\n");
 		return (0);
 	}
-	head = NULL;
-	tail = NULL;
-	valid_count = 0;
-	head = readin(av[1], &head, &tail, &valid_count);
-	if (!head)
+	queue.head = NULL;
+	queue.tail = NULL;
+	count = 0;
+	queue.head = readin(av[1], &queue, &count);
+	if (!queue.head)
 		return (0);
-	size = get_size(valid_count);
-	grid = new_grid(size);
-	
-	while (!place_on_grid(grid, head, size))
-	{
-		size++;
-		grid_cpy = grid;
-		grid = new_grid(size);
-		free (grid_cpy);
-	}
-	print_grid(grid, size);
-	free (grid);
-	free_list(&head);
+	solve(count, queue.head);
+	free_list(queue.head);
 	return (0);
 }

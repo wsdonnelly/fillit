@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   readin.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: willdonnelly <willdonnelly@student.42.f    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/25 14:01:52 by willdonnell       #+#    #+#             */
+/*   Updated: 2021/12/25 15:08:30 by willdonnell      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fillit.h"
 
-t_list	*readin(char *file, t_list **head, t_list **tail, int *valid_count)
+t_tetri	*readin(char *file, t_queue *queue, int *count)
 {
 	int		fd;
 	ssize_t	ret;
@@ -10,58 +22,42 @@ t_list	*readin(char *file, t_list **head, t_list **tail, int *valid_count)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
-		//OPEN ERROR
 		ft_putstr("error\n");
 		return (0);
 	}
 	ret = read(fd, buf, BUFF_SIZE);
-	if (ret == 0)
+	if (ret == 0 || ret == -1)
 	{
-		//INVALID TETRIMINO ERROR
 		ft_putstr("error\n");
 		return (0);
 	}
 	while (ret)
-	//while ((ret = read(fd, buf, BUFF_SIZE)))
 	{
 		ret_cpy = ret;
-		if (ret == -1)
-		{
-			// READ ERROR
-			ft_putstr("error\n");
-			return (0);
-		}
 		buf[ret] = '\0';
 		if ((ret == BUFF_SIZE && buf[20] != '\n') \
 		|| (ret == 19 && buf[19] != '\0'))
 		{
-			//INVALID TETRIMINO ERROR
 			ft_putstr("error\n");
 			return (0);
 		}
-		if (!validate(buf, head, tail, valid_count))
+		if (!validate(buf, queue, count))
 		{
-			//TETRIMINO ERROR
 			ft_putstr("error\n");
 			return (0);
 		}
-		//CATCH FILE ENDING WITH \N???
-		//DISPLAY EMPTY ERROR
 		ret = read(fd, buf, BUFF_SIZE);
-		if (ret_cpy == 21 && ret == 0)
+		if ((ret_cpy == 21 && ret == 0) || ret == -1)
 		{
-			//TETRIMINO ERROR
 			ft_putstr("error\n");
 			return (0);
 		}
-	
 	}
-	//ft_putstr("valid file!\n");
 	close (fd);
-	return (*head);
+	return (queue->head);
 }
 
-int	validate(char buf[BUFF_SIZE], t_list **head, t_list **tail, int *valid_count)
+int	validate(char buf[BUFF_SIZE], t_queue *queue, int *count)
 {
 	int	i;
 	int	hash_count;
@@ -75,36 +71,25 @@ int	validate(char buf[BUFF_SIZE], t_list **head, t_list **tail, int *valid_count
 		if (i % 5 != 4)
 		{
 			if (buf[i] != '.' && buf[i] != '#')
-			{
-				//TETRIMINO ERROR
 				return (0);
-			}
 			if (buf[i] == '#')
 			{
 				connections += check_connections(buf, i);
-				//printf("connections = %d\n", connections);
 				hash_count++;
 			}
 		}
 		else
 		{
 			if (buf[i] != '\n' && buf[i] != '\0')
-			{
-				//TETRIMINO ERROR
 				return (0);
-			}
 		}
 		i++;
 	}
 	if (connections > 5 && hash_count == 4)
 	{
-		(*valid_count)++;
-		//VALID TETRIMINO
-		//ft_putstr("valid tetrimino\n");
-		if (!add_to_list(buf, head, tail, valid_count))
-		{
+		(*count)++;
+		if (!add_to_queue(buf, queue, count))
 			return (0);
-		}
 		return (1);
 	}
 	return (0);
@@ -112,7 +97,7 @@ int	validate(char buf[BUFF_SIZE], t_list **head, t_list **tail, int *valid_count
 
 int	check_connections(char buf[BUFF_SIZE], int i)
 {
-	int c;
+	int	c;
 
 	c = 0;
 	if (i - 5 >= 0)
@@ -136,58 +121,4 @@ int	check_connections(char buf[BUFF_SIZE], int i)
 			c++;
 	}
 	return (c);
-}
-
-int	add_to_list(char buf[BUFF_SIZE], t_list **head, t_list **tail, int *valid_count)
-{
-	int		i;
-	int		j;
-	t_list	*temp;
-
-	temp = (t_list *)malloc(sizeof(t_list));
-	if (!temp)
-		return (0);
-	i = 0;
-	while (i < 19)
-	{
-		if (buf[i] == '#')
-		{
-			j = i;
-			while (buf[j])
-			{
-				j++;
-				if (buf[j] == '#')
-				{
-					//temp->rule[k] = (j - i) % size;
-					if ((j - i) % 5 == 0)
-						ft_strcat(temp->rule, "d");
-					else if ((j - i) % 5 == 1)
-						ft_strcat(temp->rule, "r");
-					else if ((j - i) % 5 == 3)
-						ft_strcat(temp->rule, "2");
-					else if ((j - i) % 5 == 4)
-						ft_strcat(temp->rule, "1");
-					i = j;
-				}
-			}
-			break ;
-		}
-		i++;
-	}
-	//printf("tetri rule:\t%s\n", temp->rule);
-	//MAKE QUEUE??
-	temp->count = *valid_count;
-	temp->next = NULL;
-	if (*tail == NULL)
-	{
-		*tail = temp;
-		*head = temp;
-	}
-	else
-	{
-		(*tail)->next = temp;
-		*tail = temp;
-	}
-	
-	return (1);
 }

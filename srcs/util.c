@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   util.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: willdonnelly <willdonnelly@student.42.f    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/25 14:31:32 by willdonnell       #+#    #+#             */
+/*   Updated: 2021/12/25 14:32:21 by willdonnell      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fillit.h"
 
-void	free_list(t_list **head)
+void	free_list(t_tetri *head)
 {
-	t_list	*cur;
-	t_list	*next;
+	t_tetri	*cur;
+	t_tetri	*next;
 
-	cur = *head;
+	cur = head;
 	while (cur)
 	{
 		next = cur->next;
@@ -16,7 +28,7 @@ void	free_list(t_list **head)
 
 int	get_size(int valid_count)
 {
-	int size;
+	int	size;
 
 	size = 2;
 	while (size * size < valid_count * 4)
@@ -30,17 +42,19 @@ char	*new_grid(int size)
 	int		i;
 
 	grid = ft_strnew((size_t)(size * size));
+	if (!grid)
+		exit (1);
 	i = 0;
 	while (i < (size * size))
 		grid[i++] = '.';
 	return (grid);
 }
 
-void print_grid(char *grid, int size)
+void	print_grid(char *grid, int size)
 {
-	int i;
-	i = 0;
+	int	i;
 
+	i = 0;
 	while (grid[i])
 	{
 		if (i % size != size - 1)
