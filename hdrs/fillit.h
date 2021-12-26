@@ -6,7 +6,7 @@
 /*   By: willdonnelly <willdonnelly@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 14:28:21 by willdonnell       #+#    #+#             */
-/*   Updated: 2021/12/25 17:00:09 by willdonnell      ###   ########.fr       */
+/*   Updated: 2021/12/26 14:12:35 by willdonnell      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ typedef struct s_tetri
 {
 	char			rule[4];
 	int				count;
+	int				start;
+	int				stop;
+	int				right;
 	struct s_tetri	*next;
 }				t_tetri;
 
@@ -53,5 +56,6 @@ int		add_tetri(t_tetri *temp, int i, char *grid, int size, int rl[4]);
 //void	draw_tetri(t_tetri *temp, char *grid, int size, int i);
 //void	delete_tetri(t_tetri *temp, char *grid, int size, int i);
 void draw_delete_tetri(int flag, char *grid, int rl[4], int count);
+void get_ssr(t_tetri *temp, int size);
 
 #endif
