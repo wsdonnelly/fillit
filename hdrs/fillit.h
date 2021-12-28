@@ -6,7 +6,7 @@
 /*   By: willdonnelly <willdonnelly@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 14:28:21 by willdonnell       #+#    #+#             */
-/*   Updated: 2021/12/27 11:36:48 by willdonnell      ###   ########.fr       */
+/*   Updated: 2021/12/28 09:47:56 by willdonnell      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_tetri
 {
 	char			rule[4];
 	int				count;
-	int				start;
+	int				left;
 	int				stop;
 	int				right;
 	int				shape[3];

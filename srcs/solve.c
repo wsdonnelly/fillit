@@ -6,7 +6,7 @@
 /*   By: willdonnelly <willdonnelly@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 14:16:45 by willdonnell       #+#    #+#             */
-/*   Updated: 2021/12/27 14:46:06 by willdonnell      ###   ########.fr       */
+/*   Updated: 2021/12/28 10:11:37 by willdonnell      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ int	place_on_grid(char *grid, t_tetri *temp, int size)
 
 	if (temp == NULL)
 		return (1);
-	i = temp->start;
+	i = -temp->left;
 	while (i < (size * size) - temp->stop)
 	{
-		if (grid[i] == '.' && i % size >= temp->start && i % size < size - temp->right)
+		if (grid[i] == '.' && i % size >= -temp->left && i % size < size - temp->right)
 		{
 			if (add_tetri(temp, i, grid))
 			{
@@ -90,9 +90,11 @@ void get_info(t_tetri *head, int size)
 void	get_ssr(t_tetri *temp, int size)
 {
 	int	i;
+	int	x;
 
 	i = 0;
-	temp->start = 0;
+	x = 0;
+	temp->left = 0;
 	temp->stop = 0;
 	temp->right = 0;
 	while (i < 3)
@@ -100,28 +102,24 @@ void	get_ssr(t_tetri *temp, int size)
 		if (temp->rule[i] == 'd')
 			temp->stop += size;
 		else if (temp->rule[i] == 'r')
-		{
-			temp->stop++;
-			temp->right++;
+		{	
+			x++;
+			if (x > temp->right)
+				temp->right++;
 		}
 		else if (temp->rule[i] == '2') 
-		{ 
-			if (i == 0)
-				temp->start += 2;
-			else if (i == 1)
-			{
-				temp->start += 1;
-				temp->stop += 3;
-			}
-			temp->stop += size - 2;
-			temp->right -= 2;
+		{
+			temp->stop += size;
+			x -= 2;
+			if (x < temp->left)
+				temp->left = x;
 		}
 		else if (temp->rule[i] == '1')
-		{ 
-			if (i == 0 || (i == 1 && temp->rule[0] == 'd'))
-				temp->start++;
-			temp->stop += size - 1;
-			temp->right--;
+		{
+			temp->stop += size;
+			x--;
+			if (x < temp->left)
+				temp->left = x;
 		}
 		i++;
 	}
