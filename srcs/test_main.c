@@ -24,6 +24,6 @@ int	main(int ac, char **av)
 	solve(count, queue.head);
 	free_list(queue.head);
 	stop = time(NULL);
-	printf("Total time:\t%ld\n", stop - start);
+	//printf("Total time:\t%ld\n", stop - start);
 	return (0);
 }
