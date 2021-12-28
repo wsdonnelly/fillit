@@ -6,7 +6,7 @@
 /*   By: willdonnelly <willdonnelly@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 14:31:32 by willdonnell       #+#    #+#             */
-/*   Updated: 2021/12/25 14:32:21 by willdonnell      ###   ########.fr       */
+/*   Updated: 2021/12/28 17:20:14 by willdonnell      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,18 @@ void	print_grid(char *grid, int size)
 			write(1, "\n", 1);
 		}
 		i++;
+	}
+}
+
+void	get_info(t_tetri *head, int size)
+{
+	t_tetri	*temp;
+
+	temp = head;
+	while (temp)
+	{
+		get_stop(temp, size);
+		get_shape(temp, size);
+		temp = temp->next;
 	}
 }

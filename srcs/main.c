@@ -6,7 +6,7 @@
 /*   By: willdonnelly <willdonnelly@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 14:01:24 by willdonnell       #+#    #+#             */
-/*   Updated: 2021/12/26 14:18:43 by willdonnell      ###   ########.fr       */
+/*   Updated: 2021/12/28 11:16:31 by willdonnell      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ int	main(int ac, char **av)
 	count = 0;
 	queue.head = readin(av[1], &queue, &count);
 	if (!queue.head)
+	{
+		ft_putstr("error\n");
 		return (0);
+	}
 	solve(count, queue.head);
 	free_list(queue.head);
 	return (0);

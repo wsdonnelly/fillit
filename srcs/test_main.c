@@ -6,6 +6,7 @@ int	main(int ac, char **av)
 {
 	t_queue	queue;
 	int		count;
+	int		fd;
 	time_t start;
 	time_t stop;
 
@@ -18,9 +19,18 @@ int	main(int ac, char **av)
 	queue.tail = NULL;
 	count = 0;
 	start = time(NULL);
-	queue.head = readin(av[1], &queue, &count);
-	if (!queue.head)
+	fd = open(av[1], O_RDONLY);
+	if (fd == -1)
+	{
+		ft_putstr("error\n");
 		return (0);
+	}
+	queue.head = readin(&queue, &count, fd);
+	if (!queue.head)
+	{
+		ft_putstr("error\n");
+		return (0);
+	}
 	solve(count, queue.head);
 	free_list(queue.head);
 	stop = time(NULL);
