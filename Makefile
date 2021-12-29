@@ -1,19 +1,13 @@
 NAME = fillit
 CC = gcc
-#DEBUG = -g
 FLAGS = -Wall -Wextra -Werror
-MORE_FLAGS = -Wpedantic -Wunused -Wconversion -Wunreachable-code -Wtype-limits
-SRCS = srcs/main.c srcs/readin.c srcs/util.c srcs/solve.c srcs/queue.c
-#SRCS = srcs/test_main.c srcs/readin.c srcs/util.c srcs/solve.c srcs/queue.c
-#OBJS = $(SRCS:.c=.o)
+SRCS = main.c readin.c util.c solve.c queue.c
 OBJS = main.o readin.o util.o solve.o queue.o
-#OBJS = test_main.o readin.o util.o solve.o queue.o
-HDRS = hdrs/
+HDRS = fillit.h
 LIB = libft/
-#LIBFT = make -C libft/ fclean && make -C libft/
 
 all:
-#	$(MAKE) -C $(LIB)
+	$(MAKE) -C $(LIB)
 	$(MAKE) $(NAME)
 
 $(NAME) : $(OBJS)
@@ -25,11 +19,11 @@ $(OBJS) : $(SRCS)
 
 clean:
 	rm -f $(OBJS)
-#	$(MAKE) -C $(LIB) clean
+	$(MAKE) -C $(LIB) clean
 
 fclean: clean
 	rm -f $(NAME)
-#	$(MAKE) -C $(LIB) fclean
+	$(MAKE) -C $(LIB) fclean
 
 re: fclean all
 
