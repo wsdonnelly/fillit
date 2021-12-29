@@ -6,7 +6,7 @@
 /*   By: willdonnelly <willdonnelly@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 14:06:04 by willdonnell       #+#    #+#             */
-/*   Updated: 2021/12/28 17:20:14 by willdonnell      ###   ########.fr       */
+/*   Updated: 2021/12/29 12:52:25 by willdonnell      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,31 @@ int	add_to_queue(char buf[BUFF_SIZE], t_queue *queue, int *count)
 	return (1);
 }
 
+/*
+int	add_to_queue(char buf[BUFF_SIZE], t_queue *queue, int *count)
+{
+	t_tetri	*temp;
+
+	temp = (t_tetri *)malloc(sizeof(t_tetri));
+	if (!temp)
+		return (0);
+	get_rule(buf, temp);
+	get_lr(temp);
+	temp->count = *count;
+	temp->next = NULL;
+	if (queue->tail == NULL)
+	{
+		queue->tail = temp;
+		queue->head = temp;
+	}
+	else
+	{
+		(queue->tail)->next = temp;
+		queue->tail = temp;
+	}
+	return (1);
+}
+*/
 void	get_rule(char buf[BUFF_SIZE], t_tetri *temp)
 {
 	int	i;

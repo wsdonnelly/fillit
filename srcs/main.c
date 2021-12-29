@@ -6,7 +6,7 @@
 /*   By: willdonnelly <willdonnelly@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 14:01:24 by willdonnell       #+#    #+#             */
-/*   Updated: 2021/12/28 11:16:31 by willdonnell      ###   ########.fr       */
+/*   Updated: 2021/12/29 13:10:31 by willdonnell      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(int ac, char **av)
 {
 	t_queue	queue;
 	int		count;
+	int		fd;
 
 	if (ac != 2)
 	{
@@ -25,7 +26,8 @@ int	main(int ac, char **av)
 	queue.head = NULL;
 	queue.tail = NULL;
 	count = 0;
-	queue.head = readin(av[1], &queue, &count);
+	fd = open(av[1], O_RDONLY);
+	queue.head = readin(&queue, &count, fd);
 	if (!queue.head)
 	{
 		ft_putstr("error\n");
