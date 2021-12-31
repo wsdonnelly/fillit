@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   queue.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: willdonnelly <willdonnelly@student.42.f    +#+  +:+       +#+        */
+/*   By: wdonnell <wdonnell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 14:06:04 by willdonnell       #+#    #+#             */
-/*   Updated: 2021/12/29 13:12:23 by willdonnell      ###   ########.fr       */
+/*   Updated: 2021/12/31 12:29:24 by wdonnell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	add_to_queue(char buf[BUFF_SIZE], t_queue *queue, int *count)
 	if (!temp)
 		return (0);
 	get_rule(buf, temp);
+	temp->right = 0;
+	temp->left = 0;
 	get_lr(temp);
 	temp->count = *count;
 	temp->next = NULL;
@@ -75,7 +77,7 @@ void	get_lr(t_tetri *temp)
 		if (temp->rule[i] == 'r')
 		{
 			if (++x > temp->right)
-				temp->right++;
+				(temp->right)++;
 		}
 		else if (temp->rule[i] == '2')
 		{
@@ -127,9 +129,9 @@ void	get_shape(t_tetri *temp, int size)
 		else if (temp->rule[i] == 'r')
 			j++;
 		else if (temp->rule[i] == '2')
-			j += size - 2;
+			j += (size - 2);
 		else if (temp->rule[i] == '1')
-			j += size - 1;
+			j += (size - 1);
 		temp->shape[i] = j;
 		i++;
 	}

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: willdonnelly <willdonnelly@student.42.f    +#+  +:+       +#+         #
+#    By: wdonnell <wdonnell@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/02 10:23:27 by wdonnell          #+#    #+#              #
-#    Updated: 2021/12/29 14:03:41 by willdonnell      ###   ########.fr        #
+#    Updated: 2021/11/19 10:25:40 by wdonnell         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,8 @@ ft_strcpy.c ft_strdel.c ft_strdup.c ft_strequ.c ft_striter.c \
 ft_striteri.c ft_strjoin.c ft_strlcat.c ft_strlen.c ft_strmap.c \
 ft_strmapi.c ft_strncat.c ft_strncmp.c ft_strncpy.c ft_strnequ.c \
 ft_strnew.c ft_strnstr.c ft_strrchr.c ft_strsplit.c ft_strstr.c \
-ft_strsub.c ft_strtrim.c ft_tolower.c ft_toupper.c 
-HDRS = libft.h 
+ft_strsub.c ft_strtrim.c ft_tolower.c ft_toupper.c
+HDRS = libft.h
 OBJS = $(SRCS:.c=.o)
 
 $(NAME) : $(OBJS)

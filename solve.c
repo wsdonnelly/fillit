@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   solve.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: willdonnelly <willdonnelly@student.42.f    +#+  +:+       +#+        */
+/*   By: wdonnell <wdonnell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 14:16:45 by willdonnell       #+#    #+#             */
-/*   Updated: 2021/12/29 13:12:35 by willdonnell      ###   ########.fr       */
+/*   Updated: 2021/12/31 12:28:11 by wdonnell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include <stdio.h>
 
 void	solve(int count, t_tetri *head)
 {
@@ -21,6 +20,8 @@ void	solve(int count, t_tetri *head)
 
 	size = get_size(count);
 	grid = new_grid(size);
+	if (!grid)
+		return ;
 	get_info(head, size);
 	while (!place_on_grid(grid, head, size))
 	{
@@ -94,3 +95,22 @@ void	draw_delete_tetri(int flag, char *grid, t_tetri *temp, int i)
 		j++;
 	}
 }
+
+				/*
+				t_tetri *temp = head;
+				while (temp)
+				{
+					printf("rule:\t");
+					for (int i = 0; i < 3; i++)
+						printf("%c ", temp->rule[i]);
+					printf("\n");
+					printf("shape:\t");
+					for (int i = 0; i < 3; i++)
+						printf("%d ", temp->shape[i]);
+					printf("\n");
+					printf("left:\t%d\n", temp->left);
+					printf("right:\t%d\n", temp->right);
+					printf("stop:\t%d\n", temp->stop);
+					temp = temp->next;
+				}
+				*/

@@ -14,7 +14,7 @@ $(NAME) : $(OBJS)
 	$(CC) $(OBJS) -L ./libft -lft -o $(NAME)
 
 $(OBJS) : $(SRCS)
-	$(CC) $(FLAGS) $(MORE_FLAGS) -c $(SRCS) -I $(HDRS)
+	$(CC) $(FLAGS) -c $(SRCS) -I $(HDRS)
 
 
 clean:

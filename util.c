@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: willdonnelly <willdonnelly@student.42.f    +#+  +:+       +#+        */
+/*   By: wdonnell <wdonnell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 14:31:32 by willdonnell       #+#    #+#             */
-/*   Updated: 2021/12/29 13:12:30 by willdonnell      ###   ########.fr       */
+/*   Updated: 2021/12/31 12:19:24 by wdonnell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*new_grid(int size)
 
 	grid = ft_strnew((size_t)(size * size));
 	if (!grid)
-		exit (1);
+		return (0);
 	i = 0;
 	while (i < (size * size))
 		grid[i++] = '.';
